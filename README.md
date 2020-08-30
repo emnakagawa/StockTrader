@@ -9,6 +9,16 @@
 - [ ] Program Buy / Sell option.
 - [ ] Track Ghost Portfolio (Past and Current Market Data – Train, Validate, Test sets)
 
+## Indicators:
+ - [x] EMA (Exponential Moving Average) [link](https://towardsdatascience.com/trading-toolbox-02-wma-ema-62c22205e2a9)
+ - [x] SMA (Simple Moving Average)
+ - [ ] MACD (Moving Average Convergence Divergence)
+ - [ ] RSI (Relative Strength Index)(70 = overbought, 30 = oversold)
+ - [ ] TSI (True Strength Index)
+ - [ ] ATR (Average True Range)(Volatility)
+ - [ ] CC (Correlation Coefficient)
+
+
 ## Additional Functionalities:
 - [ ] Compute Correlation with other related stocks
 - [ ] Automate Trading on some platform
@@ -18,7 +28,7 @@
 ## Resources: 
 - [ ] [yfinance - docs](https://pypi.org/project/yfinance/)
 - [ ] [yfinance - example to import stock data](https://towardsdatascience.com/a-comprehensive-guide-to-downloading-stock-prices-in-python-2cd93ff821d4)
-- [ ] [Insert Resource Here](InsertLinkHere.com)
+- [ ] [yfinance - Useful Blog](https://aroussi.com/post/python-yahoo-finance)
 - [ ] [Insert Resource Here](InsertLinkHere.com)
 - [ ] [Insert Resource Here](InsertLinkHere.com)
 - [ ] [Insert Resource Here](InsertLinkHere.com)
