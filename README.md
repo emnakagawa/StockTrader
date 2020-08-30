@@ -10,8 +10,7 @@
 - [ ] Track Ghost Portfolio (Past and Current Market Data – Train, Validate, Test sets)
 
 ## Indicators:
- - [x] EMA (Exponential Moving Average) [link](https://towardsdatascience.com/trading-toolbox-02-wma-ema-62c22205e2a9)
- - [x] SMA (Simple Moving Average)
+ - [x] SMA/EMA (Simple/Exponential Moving Average) [link](https://towardsdatascience.com/trading-toolbox-02-wma-ema-62c22205e2a9)
  - [ ] MACD (Moving Average Convergence Divergence)
  - [ ] RSI (Relative Strength Index)(70 = overbought, 30 = oversold)
  - [ ] TSI (True Strength Index)
