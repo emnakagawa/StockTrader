@@ -5,6 +5,7 @@ import numpy as np
 def SMA(df: pd.DataFrame, window: int = 15, num_decimals: int = 4) -> pd.DataFrame:
 # Returns EMA for a given window, first [window] values are NaN
 # Values are rounded to [num_decimals] places
+# Data must be a dataframe, with the value 'Adj Close' as one of its columns
     if 'Adj Close' in list(df):
         sma_values = df['Adj Close'].rolling(window).mean()
     else:
@@ -15,6 +16,7 @@ def SMA(df: pd.DataFrame, window: int = 15, num_decimals: int = 4) -> pd.DataFra
 def EMA(df: pd.DataFrame, window: int = 15, num_decimals: int = 4) -> pd.DataFrame:
 # Returns EMA for a given window, first [window] values are NaN
 # Values are rounded to [num_decimals] places
+# Data must be a dataframe, with the value 'Adj Close' as one of its columns
     if 'Adj Close' in list(df):
         modPrice = df['Adj Close'].copy()
     else:
@@ -32,3 +34,32 @@ def MACD(df: pd.DataFrame, ema_vals: list = [12, 26, 9], num_decimals: int = 4) 
     Signal_line = EMA(MACD_line, window=ema_vals[2], num_decimals=num_decimals)
     MACD_hist = MACD_line - Signal_line
     return MACD_line, Signal_line, MACD_hist
+
+def RSI(df: pd.DataFrame, lookback: int = 14, num_decimals: int = 4) -> pd.DataFrame:
+    change = df['Adj Close'].diff()
+    gain, loss = change.copy(), change.copy()
+    gain[gain < 0] = 0
+    loss[loss > 0] = 0
+    loss = np.absolute(loss)
+    # First compute the first avg gain or loss, which can be represented as the average of previous [lookback] days
+    avg_gain = gain.rolling(lookback).mean()
+    avg_loss = loss.rolling(lookback).mean()
+    # Assign the current gain / loss for each following period past the first average gain
+    avg_gain[lookback+1:] = gain[lookback+1:]
+    avg_loss[lookback+1:] = loss[lookback+1:]
+    # Helper function to compute the recursiveness of the average gain and loss
+    def weighted_rolling(x):
+        for i in range(1, len(x)):
+            x[i] += (lookback-1) * x[i-1]
+            x[i] /= lookback 
+        return x
+    # Calculate remaining average gain and loss and assign it to the remaining portion of the series
+    tmp_gain = weighted_rolling(list(avg_gain[lookback:].copy()))
+    avg_gain[lookback:] = tmp_gain
+
+    tmp_loss = weighted_rolling(list(avg_loss[lookback:].copy()))
+    avg_loss[lookback:] = tmp_loss
+    # RS and RSI Calculation
+    rs = avg_gain / avg_loss
+    rsi = (100 - (100 / (1 + rs)))
+    return np.round(rsi, num_decimals)
