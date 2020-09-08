@@ -91,12 +91,15 @@ def ATR(df: pd.DataFrame, period:int = 14, num_decimals: int=4) -> pd.DataFrame:
 
     return np.round(out['ATR'], num_decimals)
 
-def ACTION(df: pd.DataFrame, pct_change: float = 0.01) -> pd.DataFrame:
+def ACTION(df: pd.DataFrame, upper: float = 0.01, lower: float = 0.0) -> pd.DataFrame:
     out = df[['Adj Close']].copy()
-    # print(out)
     out['Diff'] = out['Adj Close'].diff(periods = -1) * -1
     out['Pct Diff'] = out['Diff'] / out['Adj Close']
-    out['BUY'] = out['Pct Diff'] >= pct_change 
-    out['SELL'] = out['Pct Diff'] < -pct_change 
-    # print(out)
-    return out['BUY'], out['SELL']
+    buy_mask = out['Pct Diff'] >= upper 
+    # sell_mask = out['Pct Diff'] <= lower  
+    sell_mask = out['Pct Diff'] < upper  
+
+    out['ACTION'] = 1
+    # out.loc[buy_mask, 'ACTION'] = 1
+    out.loc[sell_mask, 'ACTION'] = 0
+    return out['ACTION']
