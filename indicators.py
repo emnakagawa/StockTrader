@@ -63,3 +63,40 @@ def RSI(df: pd.DataFrame, lookback: int = 14, num_decimals: int = 4) -> pd.DataF
     rs = avg_gain / avg_loss
     rsi = (100 - (100 / (1 + rs)))
     return np.round(rsi, num_decimals)
+
+def OBV(df: pd.DataFrame, num_decimals: int=4) -> pd.DataFrame:
+    out = df[['Close', 'Volume']].copy()
+    out['Up-Down'] = np.sign(np.diff(out['Close'], prepend=np.nan))
+    out['Pos / Neg'] = out['Volume'] * out['Up-Down']
+    out['OBV'] = np.cumsum(out['Pos / Neg'])
+    return np.round(out['OBV'], num_decimals)
+
+def ATR(df: pd.DataFrame, period:int = 14, num_decimals: int=4) -> pd.DataFrame:
+    # Outputs df[ATR]
+    
+    out = df[['High', 'Low', 'Close']].copy()
+    out['H-L'] = out['High'] - out['Low']
+    out['|H-Cp|'] = np.nan
+    out['|H-Cp|'][1:] = np.absolute(out['High'][1:].values - out['Close'][:-1].values)
+    out['|L-Cp|'] = np.nan
+    out['|L-Cp|'][1:] = np.absolute(out['Low'][1:].values - out['Close'][:-1].values)
+    out['TR'] = np.nanmax([out['H-L'], out['|H-Cp|'], out['|L-Cp|']], axis=0)
+    out['ATR'] = np.nan
+    out['ATR'][period] = np.mean(out['TR'][:period], axis=0)
+    out['ATR'][period+1:] = ((period - 1) * out['ATR'][period+1:])
+
+    # Seems this part of the calculation can't be done using vectorization since it's based on the previous ATR value and thus requires recursion / iteration.
+    for i in range(out.shape[0] - period - 1):
+        out['ATR'][period + 1 + i] = (out['TR'][period + 1 + i] + (period - 1) * out['ATR'][period+i]) / period
+
+    return np.round(out['ATR'], num_decimals)
+
+def ACTION(df: pd.DataFrame, pct_change: float = 0.01) -> pd.DataFrame:
+    out = df[['Adj Close']].copy()
+    # print(out)
+    out['Diff'] = out['Adj Close'].diff(periods = -1) * -1
+    out['Pct Diff'] = out['Diff'] / out['Adj Close']
+    out['BUY'] = out['Pct Diff'] >= pct_change 
+    out['SELL'] = out['Pct Diff'] < -pct_change 
+    # print(out)
+    return out['BUY'], out['SELL']

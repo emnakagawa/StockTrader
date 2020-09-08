@@ -4,19 +4,21 @@
 ## TODO:
 - [X] Import Data Online
 - [x] Save in format that is workable (pandas / numpy)
-- [ ] Compute various indicators
-- [ ] Correlation with other stocks (we want negative correlation to reduce risk)
-- [ ] Program Buy / Sell option.
+- [x] Compute various indicators
+- [ ] ~~Correlation with other stocks (we want negative correlation to reduce risk)~~
+- [ ] Program Buy / Sell Logic for Action 
 - [ ] Track Ghost Portfolio (Past and Current Market Data – Train, Validate, Test sets)
 - [ ] Save Trades into data structure (json format)
 
-## Indicators:
+## Technical Indicators
+ ***See [Stockcharts.com](https://school.stockcharts.com/doku.php?id=technical_indicators):***
  - [x] SMA/EMA (Simple/Exponential Moving Average) [link](https://towardsdatascience.com/trading-toolbox-02-wma-ema-62c22205e2a9)
  - [x] MACD (Moving Average Convergence Divergence)
  - [x] RSI (Relative Strength Index)(70 = overbought, 30 = oversold)
- - [ ] TSI (True Strength Index)
- - [ ] ATR (Average True Range)(Volatility)
- - [ ] CC (Correlation Coefficient)
+ - [x] ATR (Average True Range)(Volatility)
+ - [x] OBV (On Balance Volume)
+ - [ ] ~~ADL (Accumulation Distribution Line)~~
+ - [ ] ~~CC (Correlation Coefficient)~~
 
 
 ## Additional Functionalities:
