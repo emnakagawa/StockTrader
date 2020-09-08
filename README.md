@@ -6,12 +6,12 @@
 - [x] Save in format that is workable (pandas / numpy)
 - [x] Compute various indicators
 - [ ] ~~Correlation with other stocks (we want negative correlation to reduce risk)~~
-- [ ] Program Buy / Sell Logic for Action 
+- [x] Program Buy / Sell Logic for Action 
 - [ ] Track Ghost Portfolio (Past and Current Market Data – Train, Validate, Test sets)
 - [ ] Save Trades into data structure (json format)
 
 ## Technical Indicators
- ***See [Stockcharts.com](https://school.stockcharts.com/doku.php?id=technical_indicators):***
+ *More at [Stockcharts.com](https://school.stockcharts.com/doku.php?id=technical_indicators)*
  - [x] SMA/EMA (Simple/Exponential Moving Average) [link](https://towardsdatascience.com/trading-toolbox-02-wma-ema-62c22205e2a9)
  - [x] MACD (Moving Average Convergence Divergence)
  - [x] RSI (Relative Strength Index)(70 = overbought, 30 = oversold)
